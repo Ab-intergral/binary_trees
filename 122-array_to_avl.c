@@ -1,25 +1,34 @@
 #include "binary_trees.h"
 
 /**
- * array_to_avl - builds an AVL tree from an array
- *		  If a value of the array is already present
- *		  in the tree, this value will be ignored.
- * @array: a pointer to the first element of the array to be converted
- * @size: the number of element in the array
- *
- * Return: a pointer to the root node of the created AVL tree,
- *	   or NULL on failure
+ * array_to_avl - turns an array to a avl tree
+ * @array: array to turns to AVL tree
+ * @size: size of array
+ * Return: AVL tree from array
  */
 avl_t *array_to_avl(int *array, size_t size)
 {
-	size_t i;
-	avl_t *root = NULL;
+	size_t i, j = 0;
+	avl_t *root;
 
-	if (array != NULL)
+	root = NULL;
+	if (size == 0)
 	{
-		for (i = 0; i < size; i++)
+		return (NULL);
+	}
+	for (i = 0; i < size; i++)
+	{
+		for (j = 0; j < i; j++)
 		{
-			avl_insert(&root, *(array + i));
+			if (array[j] == array[i])
+				break;
+		}
+		if (j == i)
+		{
+			if (avl_insert(&root, array[i]) == NULL)
+			{
+				return (NULL);
+			}
 		}
 	}
 	return (root);
